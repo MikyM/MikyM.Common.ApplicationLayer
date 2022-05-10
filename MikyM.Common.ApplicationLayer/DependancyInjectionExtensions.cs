@@ -87,7 +87,7 @@ public static class DependancyInjectionExtensions
     /// <param name="applicationConfiguration"></param>
     /// <param name="options">Optional command handler configuration</param>
     /// <returns>Current instance of the <see cref="ApplicationConfiguration"/></returns>
-    public static ApplicationConfiguration AddCommandHandlers(this ApplicationConfiguration applicationConfiguration, Action<CommandHandlerConfiguration>? options)
+    public static ApplicationConfiguration AddCommandHandlers(this ApplicationConfiguration applicationConfiguration, Action<CommandHandlerConfiguration>? options = null)
     {
         applicationConfiguration.Builder.AddCommandHandlers(options);
         return applicationConfiguration;
