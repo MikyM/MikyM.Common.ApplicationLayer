@@ -5,7 +5,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <PackageId>MikyM.Common.ApplicationLayer</PackageId>
-    <Version>1.0.4</Version>
+    <Version>1.0.5</Version>
     <Authors>Krzysztof Kupisz</Authors>
     <PackageDescription>Application layer for DDD architecture utilizing MikyM.Common.DataAccessLayer package.</PackageDescription>
     <RepositoryUrl>https://github.com/MikyM/MikyM.Common.ApplicationLayer</RepositoryUrl>
@@ -17,10 +17,9 @@
     <PackageReference Include="Autofac" Version="6.3.0" />
     <PackageReference Include="AutoMapper.Contrib.Autofac.DependencyInjection" Version="6.0.1" />
     <PackageReference Include="AutoMapper.Extensions.ExpressionMapping" Version="5.0.2" />
-    <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="6.0.0" />
     <PackageReference Include="MikyM.CommandHandlers" Version="1.0.0" />
-    <PackageReference Include="MikyM.Common.DataAccessLayer" Version="1.1.5" />
+    <PackageReference Include="MikyM.Common.DataAccessLayer" Version="1.1.7" />
   </ItemGroup>
 
 </Project>

@@ -5,7 +5,6 @@ using Autofac.Extras.DynamicProxy;
 using AutoMapper.Contrib.Autofac.DependencyInjection;
 using AutoMapper.Extensions.ExpressionMapping;
 using Castle.DynamicProxy;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MikyM.CommandHandlers.Helpers;
