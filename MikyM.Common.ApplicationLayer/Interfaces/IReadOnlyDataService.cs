@@ -1,7 +1,7 @@
 ﻿using MikyM.Common.DataAccessLayer.Specifications;
 using MikyM.Common.Utilities.Results;
 
-namespace MikyM.Common.DDDArchitecture.Interfaces;
+namespace MikyM.Common.ApplicationLayer.Interfaces;
 
 /// <summary>
 /// Read-only data service

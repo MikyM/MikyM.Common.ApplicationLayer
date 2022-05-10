@@ -1,6 +1,6 @@
 ﻿using MikyM.Common.Utilities.Results;
 
-namespace MikyM.Common.DDDArchitecture.Interfaces;
+namespace MikyM.Common.ApplicationLayer.Interfaces;
 
 /// <summary>
 /// Base data service

@@ -1,4 +1,4 @@
-﻿namespace MikyM.Common.DDDArchitecture.Extensions;
+﻿namespace MikyM.Common.ApplicationLayer.Extensions;
 
 /// <summary>
 /// String extensions

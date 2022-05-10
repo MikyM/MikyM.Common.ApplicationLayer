@@ -7,11 +7,12 @@ using AutoMapper.Extensions.ExpressionMapping;
 using Castle.DynamicProxy;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using MikyM.Common.ApplicationLayer;
-using MikyM.Common.DDDArchitecture.Interfaces;
-using MikyM.Common.DDDArchitecture.Services;
+using MikyM.CommandHandlers.Helpers;
+using MikyM.Common.ApplicationLayer.Interfaces;
+using MikyM.Common.ApplicationLayer.Services;
+using MikyM.Common.Utilities;
 
-namespace MikyM.Common.DDDArchitecture;
+namespace MikyM.Common.ApplicationLayer;
 
 /// <summary>
 /// DI extensions for <see cref="ContainerBuilder"/>
@@ -41,6 +42,56 @@ public static class DependancyInjectionExtensions
 
         return builder;
     }
+    
+    /// <summary>
+    /// Registers attribute defined services using <see cref="ContainerBuilder.AddAttributeDefinedServices"/>
+    /// </summary>
+    /// <param name="applicationConfiguration"></param>
+    /// <param name="options">Configuration action</param>
+    /// <returns>Current <see cref="ApplicationConfiguration"/> instance</returns>
+    public static ApplicationConfiguration AddAttributeDefinedServices(this ApplicationConfiguration applicationConfiguration, Action<ServiceApplicationConfiguration>? options = null)
+    {
+        var config = new ServiceApplicationConfiguration(applicationConfiguration);
+        options?.Invoke(config);
+        applicationConfiguration.Builder.AddAttributeDefinedServices(config.AttributeOptions);
+
+        return applicationConfiguration;
+    }
+
+    /// <summary>
+    /// Registers an interceptor with <see cref="ContainerBuilder"/>
+    /// </summary>
+    /// <param name="applicationConfiguration"></param>
+    /// <param name="factoryMethod">Factory method for the registration</param>
+    /// <returns>Current instance of the <see cref="ApplicationConfiguration"/></returns>
+    public static ApplicationConfiguration AddInterceptor<T>(this ApplicationConfiguration applicationConfiguration, Func<IComponentContext, T> factoryMethod) where T : notnull
+    {
+        applicationConfiguration.Builder.Register(factoryMethod);
+        return applicationConfiguration;
+    }
+
+    /// <summary>
+    /// Registers an async executor with the container
+    /// </summary>
+    /// <param name="applicationConfiguration"></param>
+    /// <returns>Current instance of the <see cref="ApplicationConfiguration"/></returns>
+    public static ApplicationConfiguration AddAsyncExecutor(this ApplicationConfiguration applicationConfiguration)
+    {
+        applicationConfiguration.Builder.AddAsyncExecutor();
+        return applicationConfiguration;
+    }
+
+    /// <summary>
+    /// Registers an async executor with the container
+    /// </summary>
+    /// <param name="applicationConfiguration"></param>
+    /// <param name="options">Optional command handler configuration</param>
+    /// <returns>Current instance of the <see cref="ApplicationConfiguration"/></returns>
+    public static ApplicationConfiguration AddCommandHandlers(this ApplicationConfiguration applicationConfiguration, Action<CommandHandlerConfiguration>? options)
+    {
+        applicationConfiguration.Builder.AddCommandHandlers(options);
+        return applicationConfiguration;
+    }
 
     /// <summary>
     /// Registers services with the <see cref="ContainerBuilder"/>
@@ -48,7 +99,7 @@ public static class DependancyInjectionExtensions
     /// <param name="applicationConfiguration"></param>
     /// <param name="options">Configuration action</param>
     /// <returns>Current <see cref="ApplicationConfiguration"/> instance</returns>
-    public static ApplicationConfiguration AddServices(this ApplicationConfiguration applicationConfiguration, Action<ServiceApplicationConfiguration>? options = null)
+    public static ApplicationConfiguration AddDataServices(this ApplicationConfiguration applicationConfiguration, Action<ServiceApplicationConfiguration>? options = null)
     {
         var builder = applicationConfiguration.Builder;
 
@@ -56,10 +107,7 @@ public static class DependancyInjectionExtensions
         options?.Invoke(config);
         
         builder.Register(x => config).As<IOptions<ServiceApplicationConfiguration>>().SingleInstance();
-
-        builder.AddAttributeDefinedServices(config.AttributeOptions);
-
-
+        
         IRegistrationBuilder<object, ReflectionActivatorData, DynamicRegistrationStyle> registReadOnlyBuilder;
         IRegistrationBuilder<object, ReflectionActivatorData, DynamicRegistrationStyle> registCrudBuilder;
 

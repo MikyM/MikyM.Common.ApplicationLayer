@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.Options;
-using MikyM.Common.ApplicationLayer;
 
-namespace MikyM.Common.DDDArchitecture;
+namespace MikyM.Common.ApplicationLayer;
 
 /// <summary>
 /// Registration extension configuration

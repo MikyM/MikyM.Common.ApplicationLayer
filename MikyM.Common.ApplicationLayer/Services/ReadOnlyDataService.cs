@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
+using MikyM.Common.ApplicationLayer.Interfaces;
 using MikyM.Common.DataAccessLayer.Specifications;
-using MikyM.Common.DDDArchitecture.Interfaces;
 using MikyM.Common.Utilities.Results;
 using MikyM.Common.Utilities.Results.Errors;
 
-namespace MikyM.Common.DDDArchitecture.Services;
+namespace MikyM.Common.ApplicationLayer.Services;
 
 /// <summary>
 /// Read-only data service

@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using MikyM.Common.DDDArchitecture.Interfaces;
+using MikyM.Common.ApplicationLayer.Interfaces;
 using MikyM.Common.Utilities.Results;
 
 // ReSharper disable ClassWithVirtualMembersNeverInherited.Global
 
-namespace MikyM.Common.DDDArchitecture.Services;
+namespace MikyM.Common.ApplicationLayer.Services;
 
 /// <summary>
 /// CRUD data service
