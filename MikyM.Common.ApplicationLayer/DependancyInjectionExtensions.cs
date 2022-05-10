@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MikyM.CommandHandlers.Helpers;
 using MikyM.Common.ApplicationLayer.Interfaces;
+using MikyM.Common.ApplicationLayer.Pagination;
 using MikyM.Common.ApplicationLayer.Services;
 using MikyM.Common.Utilities;
 
@@ -55,6 +56,17 @@ public static class DependancyInjectionExtensions
         options?.Invoke(config);
         applicationConfiguration.Builder.AddAttributeDefinedServices(config.AttributeOptions);
 
+        return applicationConfiguration;
+    }
+    
+    /// <summary>
+    /// Registers <see cref="IResponsePaginator"/> with the container
+    /// </summary>
+    /// <param name="applicationConfiguration"></param>
+    /// <returns>Current <see cref="ApplicationConfiguration"/> instance</returns>
+    public static ApplicationConfiguration AddResponsePaginator(this ApplicationConfiguration applicationConfiguration)
+    {
+        applicationConfiguration.Builder.RegisterType<ResponsePaginator>().As<IResponsePaginator>().SingleInstance();
         return applicationConfiguration;
     }
 
