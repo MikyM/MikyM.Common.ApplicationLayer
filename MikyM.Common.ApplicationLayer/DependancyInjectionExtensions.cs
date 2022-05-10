@@ -5,10 +5,12 @@ using Autofac.Extras.DynamicProxy;
 using AutoMapper.Contrib.Autofac.DependencyInjection;
 using AutoMapper.Extensions.ExpressionMapping;
 using Castle.DynamicProxy;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MikyM.CommandHandlers.Helpers;
 using MikyM.Common.ApplicationLayer.Interfaces;
+using MikyM.Common.ApplicationLayer.Pagination;
 using MikyM.Common.ApplicationLayer.Services;
 using MikyM.Common.Utilities;
 
@@ -90,6 +92,26 @@ public static class DependancyInjectionExtensions
     public static ApplicationConfiguration AddCommandHandlers(this ApplicationConfiguration applicationConfiguration, Action<CommandHandlerConfiguration>? options = null)
     {
         applicationConfiguration.Builder.AddCommandHandlers(options);
+        return applicationConfiguration;
+    }
+    
+    /// <summary>
+    /// Registers services required for pagination
+    /// </summary>
+    /// <param name="applicationConfiguration"></param>
+    /// <returns>Current instance of the <see cref="ApplicationConfiguration"/></returns>
+    public static ApplicationConfiguration AddPaginationServices(this ApplicationConfiguration applicationConfiguration)
+    {
+        applicationConfiguration.Builder.RegisterType<HttpContextAccessor>().As<IHttpContextAccessor>().SingleInstance();
+        applicationConfiguration.Builder.Register(x =>
+            {
+                var accessor = x.Resolve<IHttpContextAccessor>();
+                var request = accessor.HttpContext?.Request;
+                var uri = string.Concat(request?.Scheme, "://", request?.Host.ToUriComponent());
+                return new UriService(uri);
+            })
+            .As<IUriService>()
+            .SingleInstance();
         return applicationConfiguration;
     }
 
