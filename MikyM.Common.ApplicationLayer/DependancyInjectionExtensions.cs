@@ -10,7 +10,6 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MikyM.CommandHandlers.Helpers;
 using MikyM.Common.ApplicationLayer.Interfaces;
-using MikyM.Common.ApplicationLayer.Pagination;
 using MikyM.Common.ApplicationLayer.Services;
 using MikyM.Common.Utilities;
 
@@ -95,26 +94,6 @@ public static class DependancyInjectionExtensions
         return applicationConfiguration;
     }
     
-    /// <summary>
-    /// Registers services required for pagination
-    /// </summary>
-    /// <param name="applicationConfiguration"></param>
-    /// <returns>Current instance of the <see cref="ApplicationConfiguration"/></returns>
-    public static ApplicationConfiguration AddPaginationServices(this ApplicationConfiguration applicationConfiguration)
-    {
-        applicationConfiguration.Builder.RegisterType<HttpContextAccessor>().As<IHttpContextAccessor>().SingleInstance();
-        applicationConfiguration.Builder.Register(x =>
-            {
-                var accessor = x.Resolve<IHttpContextAccessor>();
-                var request = accessor.HttpContext?.Request;
-                var uri = string.Concat(request?.Scheme, "://", request?.Host.ToUriComponent());
-                return new UriService(uri);
-            })
-            .As<IUriService>()
-            .SingleInstance();
-        return applicationConfiguration;
-    }
-
     /// <summary>
     /// Registers services with the <see cref="ContainerBuilder"/>
     /// </summary>
