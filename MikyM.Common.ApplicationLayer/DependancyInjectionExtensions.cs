@@ -81,11 +81,11 @@ public static class DependancyInjectionExtensions
     {
         _ = interceptorLifetime switch
         {
-            Lifetime.SingleInstance => applicationConfiguration.Builder.Register(factoryMethod).SingleInstance(),
-            Lifetime.InstancePerRequest => applicationConfiguration.Builder.Register(factoryMethod).InstancePerRequest(),  
-            Lifetime.InstancePerLifetimeScope => applicationConfiguration.Builder.Register(factoryMethod).InstancePerLifetimeScope(),  
+            Lifetime.SingleInstance => applicationConfiguration.Builder.Register(factoryMethod).AsSelf().SingleInstance(),
+            Lifetime.InstancePerRequest => applicationConfiguration.Builder.Register(factoryMethod).AsSelf().InstancePerRequest(),  
+            Lifetime.InstancePerLifetimeScope => applicationConfiguration.Builder.Register(factoryMethod).AsSelf().InstancePerLifetimeScope(),  
             Lifetime.InstancePerMatchingLifetimeScope => throw new NotSupportedException(),
-            Lifetime.InstancePerDependancy => applicationConfiguration.Builder.Register(factoryMethod).InstancePerDependency(), 
+            Lifetime.InstancePerDependancy => applicationConfiguration.Builder.Register(factoryMethod).AsSelf().InstancePerDependency(), 
             Lifetime.InstancePerOwned => throw new NotSupportedException(),
             _ => throw new ArgumentOutOfRangeException(nameof(interceptorLifetime), interceptorLifetime, null)
         }; 
