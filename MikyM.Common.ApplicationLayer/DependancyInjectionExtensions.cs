@@ -36,7 +36,7 @@ public static class DependancyInjectionExtensions
 
         var config = new ApplicationConfiguration(builder);
         config.AddInterceptor(x =>
-            new LoggingInterceptor(x.Resolve<ILoggerFactory>().CreateLogger(nameof(LoggingInterceptor))));
+            new LoggingInterceptor(x.Resolve<ILoggerFactory>().CreateLogger(nameof(LoggingInterceptor))), Lifetime.SingleInstance);
         options(config);
         
         builder.Register(x => config).As<IOptions<ApplicationConfiguration>>().SingleInstance();
@@ -75,10 +75,21 @@ public static class DependancyInjectionExtensions
     /// </summary>
     /// <param name="applicationConfiguration"></param>
     /// <param name="factoryMethod">Factory method for the registration</param>
+    /// <param name="interceptorLifetime">Lifetime of the registered interceptor</param>
     /// <returns>Current instance of the <see cref="ApplicationConfiguration"/></returns>
-    public static ApplicationConfiguration AddInterceptor<T>(this ApplicationConfiguration applicationConfiguration, Func<IComponentContext, T> factoryMethod) where T : notnull
+    public static ApplicationConfiguration AddInterceptor<T>(this ApplicationConfiguration applicationConfiguration, Func<IComponentContext, T> factoryMethod, Lifetime interceptorLifetime) where T : notnull
     {
-        applicationConfiguration.Builder.Register(factoryMethod);
+        _ = interceptorLifetime switch
+        {
+            Lifetime.SingleInstance => applicationConfiguration.Builder.Register(factoryMethod).SingleInstance(),
+            Lifetime.InstancePerRequest => applicationConfiguration.Builder.Register(factoryMethod).InstancePerRequest(),  
+            Lifetime.InstancePerLifetimeScope => applicationConfiguration.Builder.Register(factoryMethod).InstancePerLifetimeScope(),  
+            Lifetime.InstancePerMatchingLifetimeScope => throw new NotSupportedException(),
+            Lifetime.InstancePerDependancy => applicationConfiguration.Builder.Register(factoryMethod).InstancePerDependency(), 
+            Lifetime.InstancePerOwned => throw new NotSupportedException(),
+            _ => throw new ArgumentOutOfRangeException(nameof(interceptorLifetime), interceptorLifetime, null)
+        }; 
+        
         return applicationConfiguration;
     }
 
@@ -94,7 +105,7 @@ public static class DependancyInjectionExtensions
     }
 
     /// <summary>
-    /// Registers an async executor with the container
+    /// Registers command handlers with the <see cref="ContainerBuilder"/>
     /// </summary>
     /// <param name="applicationConfiguration"></param>
     /// <param name="options">Optional command handler configuration</param>
@@ -106,7 +117,7 @@ public static class DependancyInjectionExtensions
     }
     
     /// <summary>
-    /// Registers services with the <see cref="ContainerBuilder"/>
+    /// Registers data services with the <see cref="ContainerBuilder"/>
     /// </summary>
     /// <param name="applicationConfiguration"></param>
     /// <param name="options">Configuration action</param>
