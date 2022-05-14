@@ -12,7 +12,7 @@ public sealed class ApplicationConfiguration : IOptions<ApplicationConfiguration
 
     internal  ApplicationConfiguration(ContainerBuilder builder)
     {
-        this.Builder = builder;
+        Builder = builder;
     }
 
     /// <inheritdoc />

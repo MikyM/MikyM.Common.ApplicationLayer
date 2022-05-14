@@ -36,18 +36,27 @@ public static class DependancyInjectionExtensions
 
         return builder;
     }
-    
+
     /// <summary>
     /// Registers attribute defined services using <see cref="ContainerBuilder.AddAttributeDefinedServices"/>
     /// </summary>
     /// <param name="applicationConfiguration"></param>
     /// <param name="options">Configuration action</param>
     /// <returns>Current <see cref="ApplicationConfiguration"/> instance</returns>
-    public static ApplicationConfiguration AddAttributeDefinedServices(this ApplicationConfiguration applicationConfiguration, Action<ServiceApplicationConfiguration>? options = null)
+    public static ApplicationConfiguration AddAttributeDefinedServices(
+        this ApplicationConfiguration applicationConfiguration, Action<AttributeRegistrationOptions>? options = null)
     {
-        var config = new ServiceApplicationConfiguration(applicationConfiguration);
-        options?.Invoke(config);
-        applicationConfiguration.Builder.AddAttributeDefinedServices(config.AttributeOptions);
+        if (options is not null)
+        {
+            var config = new AttributeRegistrationOptions(applicationConfiguration.Builder);
+            options.Invoke(config);
+            applicationConfiguration.Builder.AddAttributeDefinedServices(options);
+        }
+        else
+        {
+            applicationConfiguration.Builder.AddAttributeDefinedServices();
+        }
+
 
         return applicationConfiguration;
     }

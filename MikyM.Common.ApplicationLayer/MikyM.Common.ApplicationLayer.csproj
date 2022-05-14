@@ -5,9 +5,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <PackageId>MikyM.Common.ApplicationLayer</PackageId>
-    <Version>1.2.1</Version>
+    <Version>1.2.2</Version>
     <Authors>Krzysztof Kupisz</Authors>
-    <PackageDescription>Application layer for DDD architecture utilizing MikyM.Common.DataAccessLayer package.</PackageDescription>
+    <PackageDescription>Base Application layer for DDD architecture utilizing MikyM.Common.DataAccessLayer base package.</PackageDescription>
     <RepositoryUrl>https://github.com/MikyM/MikyM.Common.ApplicationLayer</RepositoryUrl>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <GenerateDocumentationFile>True</GenerateDocumentationFile>
