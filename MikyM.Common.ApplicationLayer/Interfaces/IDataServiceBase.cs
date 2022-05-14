@@ -15,7 +15,7 @@ public interface IDataServiceBase : IDisposable
     /// Commits pending changes with specifying user that is responsible for them
     /// </summary>
     /// <param name="auditUserId">Id of the user that's responsible for the changes</param>
-    Task<Result> CommitAsync(string? auditUserId);
+    Task<Result> CommitAsync(string auditUserId);
     /// <summary>
     /// Rolls the current transaction back
     /// </summary>
