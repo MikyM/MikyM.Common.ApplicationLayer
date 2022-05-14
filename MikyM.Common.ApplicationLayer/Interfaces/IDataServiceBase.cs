@@ -5,8 +5,7 @@ namespace MikyM.Common.ApplicationLayer.Interfaces;
 /// <summary>
 /// Base data service
 /// </summary>
-/// <typeparam name="TContext">Type that derives from <see cref="DbContext"/></typeparam>
-public interface IDataServiceBase<TContext> : IDisposable where TContext : DbContext
+public interface IDataServiceBase : IDisposable
 {
     /// <summary>
     /// Commits pending changes
@@ -24,9 +23,4 @@ public interface IDataServiceBase<TContext> : IDisposable where TContext : DbCon
     /// </summary>
     /// <returns>Task with a <see cref="Result"/> representing the async operation</returns>
     Task<Result> RollbackAsync();
-    /// <summary>
-    /// Begins a transaction
-    /// </summary>
-    /// <returns>Task with a <see cref="Result"/> representing the async operation</returns>
-    Task<Result> BeginTransactionAsync();
 }

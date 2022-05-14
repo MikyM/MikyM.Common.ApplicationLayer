@@ -1,7 +1,7 @@
 ﻿namespace MikyM.Common.ApplicationLayer.Interfaces;
 
 /// <summary>
-/// Base service marker interface
+/// Base service definition
 /// </summary>
 public interface IServiceBase
 {
