@@ -1,4 +1,5 @@
-﻿using Autofac;
+﻿using System.Runtime.CompilerServices;
+using Autofac;
 using Microsoft.Extensions.Options;
 
 namespace MikyM.Common.ApplicationLayer;
@@ -8,7 +9,7 @@ namespace MikyM.Common.ApplicationLayer;
 /// </summary>
 public sealed class ApplicationConfiguration : IOptions<ApplicationConfiguration>
 {
-    internal ContainerBuilder Builder { get; set; }
+    internal readonly ContainerBuilder Builder;
 
     internal  ApplicationConfiguration(ContainerBuilder builder)
     {
