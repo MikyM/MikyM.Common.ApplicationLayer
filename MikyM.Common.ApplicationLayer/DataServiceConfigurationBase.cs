@@ -14,7 +14,7 @@ public abstract class DataServiceConfigurationBase
     /// <summary>
     /// Gets data interceptor registration delegates
     /// </summary>
-    protected Dictionary<Type, DataInterceptorConfiguration> DataInterceptors { get; private set; } = new();
+    public Dictionary<Type, DataInterceptorConfiguration> DataInterceptors { get; private set; } = new();
     
     /// <summary>
     /// Marks an interceptor of a given type to be used for intercepting base data services.
