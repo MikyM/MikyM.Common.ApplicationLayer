@@ -10,14 +10,12 @@ public interface IDataServiceBase : IDisposable
     /// <summary>
     /// Commits pending changes
     /// </summary>
-    /// <returns> <see cref="Result"/> with number of affected rows</returns>
-    Task<Result<int>> CommitAsync();
+    Task<Result> CommitAsync();
     /// <summary>
     /// Commits pending changes with specifying user that is responsible for them
     /// </summary>
     /// <param name="auditUserId">Id of the user that's responsible for the changes</param>
-    /// <returns> <see cref="Result"/> with number of affected rows</returns>
-    Task<Result<int>> CommitAsync(string? auditUserId);
+    Task<Result> CommitAsync(string? auditUserId);
     /// <summary>
     /// Rolls the current transaction back
     /// </summary>
