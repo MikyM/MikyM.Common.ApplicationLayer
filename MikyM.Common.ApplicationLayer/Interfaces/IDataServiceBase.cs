@@ -5,8 +5,12 @@ namespace MikyM.Common.ApplicationLayer.Interfaces;
 /// <summary>
 /// Base data service
 /// </summary>
-public interface IDataServiceBase : IDisposable
+public interface IDataServiceBase<TContext> : IDisposable where TContext : class
 {
+    /// <summary>
+    /// Current database context
+    /// </summary>
+    TContext Context { get; }
     /// <summary>
     /// Commits pending changes
     /// </summary>
