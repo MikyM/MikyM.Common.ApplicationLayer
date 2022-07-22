@@ -12,6 +12,10 @@ public interface IDataServiceBase<TContext> : IDisposable where TContext : class
     /// </summary>
     TContext Context { get; }
     /// <summary>
+    /// Current database context
+    /// </summary>
+    IUnitOfWorkBase UnitOfWork { get; }
+    /// <summary>
     /// Commits pending changes
     /// </summary>
     Task<Result> CommitAsync();
