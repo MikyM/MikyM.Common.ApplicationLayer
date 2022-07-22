@@ -12,7 +12,7 @@ public interface IDataServiceBase<TContext> : IDisposable where TContext : class
     /// </summary>
     TContext Context { get; }
     /// <summary>
-    /// Current database context
+    /// Current Unit of Work
     /// </summary>
     IUnitOfWorkBase UnitOfWork { get; }
     /// <summary>
