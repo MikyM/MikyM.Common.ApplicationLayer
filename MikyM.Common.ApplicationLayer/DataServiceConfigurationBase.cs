@@ -1,28 +1,31 @@
 ﻿namespace MikyM.Common.ApplicationLayer;
 
+/// <summary>
+/// Base configuration of data service layer.
+/// </summary>
+[PublicAPI]
 public abstract class DataServiceConfigurationBase
 {
     /// <summary>
-    /// Gets or sets the default lifetime for base generic data services
+    /// Gets or sets the default lifetime for base generic data services.
     /// </summary>
     public Lifetime BaseGenericDataServiceLifetime { get; set; } = Lifetime.InstancePerLifetimeScope;
     /// <summary>
-    /// Gets or sets the default lifetime for custom data services that implement or derive from base data services
+    /// Gets or sets the default lifetime for custom data services that implement or derive from base data services.
     /// </summary>
     public Lifetime DataServiceLifetime { get; set; } = Lifetime.InstancePerLifetimeScope;
     
     /// <summary>
-    /// Gets data interceptor registration delegates
+    /// Gets data interceptor registration delegates.
     /// </summary>
     public Dictionary<Type, DataInterceptorConfiguration> DataInterceptors { get; private set; } = new();
     
     /// <summary>
     /// Marks an interceptor of a given type to be used for intercepting base data services.
-    /// Please note you must also add this interceptor using <see cref="ApplicationConfiguration.AddInterceptor{T}"/>
     /// </summary>
-    /// <param name="interceptor">Type of the interceptor</param>
-    /// <param name="configuration">Interceptor configuration</param>
-    /// <returns>Current instance of the <see cref="ServiceApplicationConfiguration"/></returns>
+    /// <param name="interceptor">Type of the interceptor.</param>
+    /// <param name="configuration">Interceptor configuration.</param>
+    /// <returns>Current instance of the <see cref="DataServiceConfigurationBase"/>.</returns>
     public virtual DataServiceConfigurationBase AddDataServiceInterceptor(Type interceptor, DataInterceptorConfiguration configuration = DataInterceptorConfiguration.CrudAndReadOnly)
     {
         DataInterceptors.TryAdd(interceptor ?? throw new ArgumentNullException(nameof(interceptor)), configuration);
@@ -30,10 +33,9 @@ public abstract class DataServiceConfigurationBase
     }
     /// <summary>
     /// Marks an interceptor of a given type to be used for intercepting base data services.
-    /// Please note you must also add this interceptor using <see cref="ApplicationConfiguration.AddInterceptor{T}"/>
     /// </summary>
-    /// <param name="configuration">Interceptor configuration</param>
-    /// <returns>Current instance of the <see cref="ServiceApplicationConfiguration"/></returns>
+    /// <param name="configuration">Interceptor configuration.</param>
+    /// <returns>Current instance of the <see cref="DataServiceConfigurationBase"/>.</returns>
     public virtual DataServiceConfigurationBase AddDataServiceInterceptor<T>(DataInterceptorConfiguration configuration = DataInterceptorConfiguration.CrudAndReadOnly) where T : notnull
     {
         DataInterceptors.TryAdd(typeof(T), configuration);
@@ -42,20 +44,20 @@ public abstract class DataServiceConfigurationBase
 }
 
 /// <summary>
-/// Configuration for base data service interceptors
+/// Configuration for base data service interceptors.
 /// </summary>
 public enum DataInterceptorConfiguration
 {
     /// <summary>
-    /// Crud and read-only
+    /// Crud and read-only.
     /// </summary>
     CrudAndReadOnly,
     /// <summary>
-    /// Crud
+    /// Crud.
     /// </summary>
     Crud,
     /// <summary>
-    /// Read-only
+    /// Read-only.
     /// </summary>
     ReadOnly
 }

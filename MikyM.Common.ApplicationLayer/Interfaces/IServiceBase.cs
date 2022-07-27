@@ -1,8 +1,9 @@
 ﻿namespace MikyM.Common.ApplicationLayer.Interfaces;
 
 /// <summary>
-/// Base service definition
+/// Defines a base service.
 /// </summary>
+[PublicAPI]
 public interface IServiceBase
 {
 }

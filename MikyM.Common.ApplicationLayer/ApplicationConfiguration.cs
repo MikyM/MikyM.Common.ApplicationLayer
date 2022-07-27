@@ -1,11 +1,10 @@
-﻿using System.Runtime.CompilerServices;
-using Autofac;
+﻿using Autofac;
 using Microsoft.Extensions.Options;
 
 namespace MikyM.Common.ApplicationLayer;
 
 /// <summary>
-/// Registration extension configuration
+/// Registration extension configuration.
 /// </summary>
 public sealed class ApplicationConfiguration : IOptions<ApplicationConfiguration>
 {

@@ -9,15 +9,16 @@ using MikyM.Common.Utilities;
 namespace MikyM.Common.ApplicationLayer;
 
 /// <summary>
-/// DI extensions for <see cref="ContainerBuilder"/>
+/// DI extensions for <see cref="ContainerBuilder"/>.
 /// </summary>
+[PublicAPI]
 public static class DependancyInjectionExtensions
 {
     /// <summary>
-    /// Registers application layer with the <see cref="ContainerBuilder"/>
+    /// Registers application layer with the <see cref="ContainerBuilder"/>.
     /// </summary>
-    /// <param name="builder"></param>
-    /// <param name="options">Configuration options</param>
+    /// <param name="builder">Builder.</param>
+    /// <param name="options">Configuration options.</param>
     /// <returns>Current <see cref="ApplicationConfiguration"/> instance</returns>
     public static ContainerBuilder AddApplicationLayer(this ContainerBuilder builder, Action<ApplicationConfiguration> options)
     {
@@ -38,10 +39,10 @@ public static class DependancyInjectionExtensions
     }
 
     /// <summary>
-    /// Registers attribute defined services using <see cref="ContainerBuilder.AddAttributeDefinedServices"/>
+    /// Registers attribute defined services using <see cref="MikyM.Autofac.Extensions.DependancyInjectionExtensions.AddAttributeDefinedServices"/>.
     /// </summary>
-    /// <param name="applicationConfiguration"></param>
-    /// <param name="options">Configuration action</param>
+    /// <param name="applicationConfiguration">Configuration.</param>
+    /// <param name="options">Configuration action.</param>
     /// <returns>Current <see cref="ApplicationConfiguration"/> instance</returns>
     public static ApplicationConfiguration AddAttributeDefinedServices(
         this ApplicationConfiguration applicationConfiguration, Action<AttributeRegistrationOptions>? options = null)
@@ -62,11 +63,11 @@ public static class DependancyInjectionExtensions
     }
 
     /// <summary>
-    /// Registers an interceptor with <see cref="ContainerBuilder"/>
+    /// Registers an interceptor with <see cref="ContainerBuilder"/>.
     /// </summary>
-    /// <param name="applicationConfiguration"></param>
-    /// <param name="factoryMethod">Factory method for the registration</param>
-    /// <param name="interceptorLifetime">Lifetime of the registered interceptor</param>
+    /// <param name="applicationConfiguration">Configuration.</param>
+    /// <param name="factoryMethod">Factory method for the registration.</param>
+    /// <param name="interceptorLifetime">Lifetime of the registered interceptor.</param>
     /// <returns>Current instance of the <see cref="ApplicationConfiguration"/></returns>
     public static ApplicationConfiguration AddInterceptor<T>(this ApplicationConfiguration applicationConfiguration, Func<IComponentContext, T> factoryMethod, Lifetime interceptorLifetime) where T : notnull
     {
@@ -85,10 +86,10 @@ public static class DependancyInjectionExtensions
     }
 
     /// <summary>
-    /// Registers an async executor with the container
+    /// Registers an async executor with the container.
     /// </summary>
-    /// <param name="applicationConfiguration"></param>
-    /// <returns>Current instance of the <see cref="ApplicationConfiguration"/></returns>
+    /// <param name="applicationConfiguration">Configuration.</param>
+    /// <returns>Current instance of the <see cref="ApplicationConfiguration"/>.</returns>
     public static ApplicationConfiguration AddAsyncExecutor(this ApplicationConfiguration applicationConfiguration)
     {
         applicationConfiguration.Builder.AddAsyncExecutor();
@@ -96,10 +97,10 @@ public static class DependancyInjectionExtensions
     }
 
     /// <summary>
-    /// Registers command handlers with the <see cref="ContainerBuilder"/>
+    /// Registers command handlers with the <see cref="ContainerBuilder"/>.
     /// </summary>
-    /// <param name="applicationConfiguration"></param>
-    /// <param name="options">Optional command handler configuration</param>
+    /// <param name="applicationConfiguration">Configuration.</param>
+    /// <param name="options">Optional command handler configuration.</param>
     /// <returns>Current instance of the <see cref="ApplicationConfiguration"/></returns>
     public static ApplicationConfiguration AddCommandHandlers(this ApplicationConfiguration applicationConfiguration, Action<CommandHandlerConfiguration>? options = null)
     {
