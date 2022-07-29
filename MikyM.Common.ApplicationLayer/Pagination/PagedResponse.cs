@@ -1,11 +1,13 @@
-﻿namespace MikyM.Common.ApplicationLayer.Pagination;
+﻿using MikyM.Common.Utilities.Results;
+
+namespace MikyM.Common.ApplicationLayer.Pagination;
 
 /// <summary>
-/// Paged response.
+/// Represents a paged response with data.
 /// </summary>
-/// <typeparam name="T"></typeparam>
+/// <typeparam name="T">Type of data.</typeparam>
 [PublicAPI]
-public class PagedResponse<T> : Response<T>
+public record PagedResponse<T> : Response<T>
 {
     /// <summary>
     /// Base constructor.
@@ -14,7 +16,7 @@ public class PagedResponse<T> : Response<T>
     /// <param name="pageNumber">Page number.</param>
     /// <param name="pageSize">Page size.</param>
     /// <param name="errors">Errors if any,</param>
-    public PagedResponse(T data, int pageNumber, int pageSize, IEnumerable<string>? errors = null) : base(data,
+    public PagedResponse(T data, int pageNumber, int pageSize, IEnumerable<IResultError>? errors = null) : base(data,
         errors)
     {
         PageNumber = pageNumber;

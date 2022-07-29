@@ -1,17 +1,28 @@
-﻿namespace MikyM.Common.ApplicationLayer.Pagination;
+﻿using System.Text.Json;
+using MikyM.Common.Utilities.Results;
+
+namespace MikyM.Common.ApplicationLayer.Pagination;
 
 /// <summary>
-/// Response.
+/// Represents a response without data.
 /// </summary>
 [PublicAPI]
-public class Response
+public record Response
 {
 
     /// <summary>
     /// Constructor.
     /// </summary>
     /// <param name="errors">Errors if any.</param>
-    public Response(IEnumerable<string>? errors = null) : this(null, errors)
+    public Response(IEnumerable<IResultError>? errors = null) : this(null, errors)
+    {
+    }
+    
+    /// <summary>
+    /// Constructor.
+    /// </summary>
+    /// <param name="errors">Errors if any.</param>
+    public Response(params IResultError[] errors) : this(null, errors)
     {
     }
 
@@ -20,10 +31,21 @@ public class Response
     /// </summary>
     /// <param name="message">Message if any.</param>
     /// <param name="errors">Errors if any.</param>
-    public Response(string? message = null, IEnumerable<string>? errors = null)
+    public Response(string? message = null, IEnumerable<IResultError>? errors = null)
     {
-        Message = message ?? string.Empty;
-        Errors = errors?.ToArray();
+        Message = message;
+        Errors = errors;
+    }
+    
+    /// <summary>
+    /// Constructor.
+    /// </summary>
+    /// <param name="message">Message if any.</param>
+    /// <param name="errors">Errors if any.</param>
+    public Response(string? message = null, params IResultError[] errors)
+    {
+        Message = message;
+        Errors = errors;
     }
 
     /// <summary>
@@ -33,26 +55,42 @@ public class Response
     /// <summary>
     /// Errors if any.
     /// </summary>
-    public string[]? Errors { get; set; }
+    public IEnumerable<IResultError>? Errors { get; set; }
     /// <summary>
     /// Message if any.
     /// </summary>
     public string? Message { get; set; }
+
+    /// <summary>
+    /// Returns a JSON string representation of current instance.
+    /// </summary>
+    /// <returns>JSON string representation of current instance.</returns>
+    public override string ToString()
+        => JsonSerializer.Serialize(this);
 }
 
 /// <summary>
-/// Response of T.
+/// Represents a response with data.
 /// </summary>
 /// <typeparam name="T">Type of data.</typeparam>
 [PublicAPI]
-public class Response<T> : Response
+public record Response<T> : Response
 {
     /// <summary>
     /// Constructor.
     /// </summary>
     /// <param name="data">Data.</param>
     /// <param name="errors">Errors if any.</param>
-    public Response(T? data, IEnumerable<string>? errors = null) : this(data, null, errors)
+    public Response(T? data, IEnumerable<IResultError>? errors = null) : this(data, null, errors)
+    {
+    }
+    
+    /// <summary>
+    /// Constructor.
+    /// </summary>
+    /// <param name="data">Data.</param>
+    /// <param name="errors">Errors if any.</param>
+    public Response(T? data, params IResultError[] errors) : this(data, null, errors)
     {
     }
 
@@ -62,7 +100,18 @@ public class Response<T> : Response
     /// <param name="data">Data.</param>
     /// <param name="errors">Errors if any.</param>
     /// <param name="message">Message if any.</param>
-    public Response(T? data, string? message = null, IEnumerable<string>? errors = null) : base(message, errors)
+    public Response(T? data, string? message = null, IEnumerable<IResultError>? errors = null) : base(message, errors)
+    {
+        Data = data;
+    }
+    
+    /// <summary>
+    /// Constructor.
+    /// </summary>
+    /// <param name="data">Data.</param>
+    /// <param name="errors">Errors if any.</param>
+    /// <param name="message">Message if any.</param>
+    public Response(T? data, string? message = null, params IResultError[] errors) : base(message, errors)
     {
         Data = data;
     }
