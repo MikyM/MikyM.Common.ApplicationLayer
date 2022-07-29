@@ -3,7 +3,7 @@ using AutoMapper.Contrib.Autofac.DependencyInjection;
 using AutoMapper.Extensions.ExpressionMapping;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using MikyM.CommandHandlers.Helpers;
+using MikyM.CommandHandlers;
 using MikyM.Common.Utilities;
 
 namespace MikyM.Common.ApplicationLayer;
@@ -77,7 +77,7 @@ public static class DependancyInjectionExtensions
             Lifetime.InstancePerRequest => applicationConfiguration.Builder.Register(factoryMethod).AsSelf().InstancePerRequest(),  
             Lifetime.InstancePerLifetimeScope => applicationConfiguration.Builder.Register(factoryMethod).AsSelf().InstancePerLifetimeScope(),  
             Lifetime.InstancePerMatchingLifetimeScope => throw new NotSupportedException(),
-            Lifetime.InstancePerDependancy => applicationConfiguration.Builder.Register(factoryMethod).AsSelf().InstancePerDependency(), 
+            Lifetime.InstancePerDependency => applicationConfiguration.Builder.Register(factoryMethod).AsSelf().InstancePerDependency(), 
             Lifetime.InstancePerOwned => throw new NotSupportedException(),
             _ => throw new ArgumentOutOfRangeException(nameof(interceptorLifetime), interceptorLifetime, null)
         }; 
