@@ -19,15 +19,18 @@ public interface IDataServiceBase<out TContext> : IDisposable where TContext : c
     /// <summary>
     /// Commits pending changes.
     /// </summary>
-    Task<Result> CommitAsync();
+    /// <param name="cancellationToken">Cancellation token.</param>
+    Task<Result> CommitAsync(CancellationToken cancellationToken = default);
     /// <summary>
     /// Commits pending changes with specifying user that is responsible for them.
     /// </summary>
     /// <param name="auditUserId">Id of the user that's responsible for the changes.</param>
-    Task<Result> CommitAsync(string auditUserId);
+    /// <param name="cancellationToken">Cancellation token.</param>
+    Task<Result> CommitAsync(string auditUserId, CancellationToken cancellationToken = default);
     /// <summary>
     /// Rolls the current transaction back.
     /// </summary>
+    /// <param name="cancellationToken">Cancellation token.</param>
     /// <returns>Task with a <see cref="Result"/> representing the async operation.</returns>
-    Task<Result> RollbackAsync();
+    Task<Result> RollbackAsync(CancellationToken cancellationToken = default);
 }
